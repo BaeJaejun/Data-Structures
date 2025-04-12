@@ -89,6 +89,41 @@ int main()
 int moveMaxToFront(ListNode **ptrHead)
 {
     /* add your code here */
+
+	//리스트가 비었거나 한개뿐이면 아무것도 하지 말고 리턴
+	if (*ptrHead == NULL || (*ptrHead)->next == NULL){
+		return -1;
+	}
+
+	ListNode *cur = *ptrHead; //탐색용
+	ListNode *prev = *ptrHead; // 탐색용 현재 바로 앞 노드 포인터
+	ListNode *max = *ptrHead; // 최댓값 저장용  노드포인터
+	ListNode *prev_max = *ptrHead; // 최댓값 바로 앞 저장용 노드포인터
+	
+	int max_item = cur->item;
+	prev = cur;
+	cur = cur->next;
+
+	while(cur != NULL){ //끝까지 순회
+		if(max_item < cur->item){
+			max_item = cur->item;
+			max = cur;
+			prev_max = prev;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+
+	//최댓값이 이미 맨 앞임.
+	if(max == *ptrHead)
+		return 0;
+
+	//최댓값을 리스트에서 빼고 맨 앞에 꽂아주기
+	prev_max->next = max->next;
+	max->next = *ptrHead;
+	*ptrHead = max;
+	
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

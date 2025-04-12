@@ -71,7 +71,7 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
+			//removeAllItems(&ll); //동주신의 주석처리
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -91,6 +91,51 @@ int main()
 int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
+	int idx = 0;
+	ListNode *cur;
+	ListNode *prev = NULL; //이전 위치를 기억할 변수
+	// 노드 생성
+	ListNode* ln = (ListNode*)malloc(sizeof(ListNode));
+	ln->item = item; //값 넣어주기
+	
+	cur = ll->head; //헤드에 연결된 첫 노드부터 시작
+	if(cur == NULL){ //연결 리스트가 비었을 때 넣고 바로 리턴
+		ln->next = NULL;
+		ll->head = ln;
+		ll->size += 1;
+		return 0;
+	}
+	
+	while (cur != NULL){
+		if(cur->item == ln->item){//존재하면 -1 리턴
+			free(ln); //안 붙었으니까 할당 해제
+			return -1;
+		}
+		else if(cur->item < ln->item){ //ln이 현재 노드보다 크면 다음으로 이동
+			prev = cur;
+			cur = cur->next;
+			idx += 1;
+		}
+		else{ //위치를 찾음 넣자
+			if (prev == NULL){ //만약 첫번째 노드 앞에 들어가야할 때 예외
+				ln->next = ll->head;
+				ll->head = ln;
+			}
+			else{
+				prev->next = ln;
+				ln->next = cur;
+			}
+			ll->size += 1;
+			return idx;
+		}
+	}
+
+	//위치가 맨 끝일때
+	ln->next = NULL;
+	prev->next = ln;
+	ll->size++;
+
+	return idx; // 입력된 값의 인덱스 리턴
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

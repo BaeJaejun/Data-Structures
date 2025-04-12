@@ -104,6 +104,34 @@ int main()
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
     /* add your code here */
+	ListNode* cur1;
+	ListNode* prev1;
+
+	ListNode* cur2;
+	ListNode* prev2;
+	if(ll1->head != NULL && ll2->head != NULL){
+		// 첫 노드로 이동
+		cur1 = ll1->head;
+		cur2 = ll2->head;
+		while(cur1 != NULL && cur2 != NULL){
+			//포인터 옮겨야하는 노드 4개 설정
+			prev1 = cur1;
+			prev2 = cur2;
+			cur1 = cur1->next;
+			cur2 = cur2->next;
+
+			//포인터 옮기기 
+			prev1->next = prev2;
+			prev2->next = cur1;
+			// 리스트2에서 빼주기
+			ll2->head = cur2;
+
+			//리스트 사이즈 조절
+			ll1->size++;
+        	ll2->size--;
+		}
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

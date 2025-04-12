@@ -38,7 +38,8 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
-	int c, i;
+	int  i;
+	int c = 100;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
 
@@ -103,6 +104,23 @@ int main()
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
 	/* add your code here */
+	ListNode * cur ;
+	cur= ll->head;
+	int cutter = (ll->size+1) / 2; //curtter 까지 front ex) 7 8/2 = 4 0123 456
+	
+	resultFrontList->head = ll->head;
+
+	//사이즈는 어짜피 절반 반틈이니까
+	resultFrontList->size = cutter;
+	resultBackList->size =  ll->size - cutter;
+	
+	ListNode* cut = findNode(ll, cutter - 1);
+	resultBackList->head = cut->next;
+	cut->next = NULL;
+	
+	//나눴으니 원본 리스트 비워줘야 한다.
+	ll->head = NULL;
+	ll->size = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
