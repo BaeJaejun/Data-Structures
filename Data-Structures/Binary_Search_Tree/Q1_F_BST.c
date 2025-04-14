@@ -93,8 +93,32 @@ int main()
 
 void levelOrderTraversal(BSTNode* root)
 {
-
     /* add your code here */
+	//bfs
+	//빈 트리면 바로 리턴
+	if (root == NULL)
+		return;
+	
+	//큐 선언 및 루트 넣기
+	Queue q;
+	q.head = NULL;
+	q.tail = NULL;
+	
+	enqueue(&q.head,&q.tail,root);
+	
+	BSTNode* n;
+	//큐는 헤드에서 deque 테일에서 enque
+	while (!isEmpty(q.head)){
+		n = dequeue(&q.head,&q.tail);
+
+		printf("%d ",n->item);
+
+		if (n->left != NULL)
+			enqueue(&q.head,&q.tail,n->left);
+		if (n->right != NULL)
+			enqueue(&q.head,&q.tail,n->right);
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

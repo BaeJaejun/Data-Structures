@@ -103,6 +103,21 @@ int main()
 int smallestValue(BTNode *node)
 {
 	/* add your code here */
+    if(node == NULL)
+        return 2147483647; // 32비트 기준 INT_MAX 값
+    int min_value;
+    int left = smallestValue(node->left);
+    int right = smallestValue(node->right);
+
+    //좌 우 자식 비교 
+    if(left < right){
+        min_value = left;
+    }
+    else
+        min_value = right;
+
+    // min 과 root 비교 후 리턴
+    return min_value = (node->item < min_value) ? node->item : min_value ;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

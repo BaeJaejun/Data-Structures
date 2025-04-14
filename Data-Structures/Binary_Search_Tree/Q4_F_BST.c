@@ -91,7 +91,58 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	/* add your code here */
+	// root -> left -> right
+
+	if (root == NULL) return;
+	
+	Stack stk;
+	stk.top = NULL;
+
+	push(&stk,root);
+	int dwn_chk = 1; //자식으로 내려가는가
+	int up_chk = 0; //자식 처리 후 부모로 가는가
+	BSTNode* cur;
+	BSTNode* lastvisited = NULL; // 이전 방문노드 저장
+
+	while (!isEmpty(&stk)){
+		cur = peek(&stk);
+		
+		if (dwn_chk){
+			//왼쪽 우선 방문
+			if (cur->left != NULL){
+				push(&stk,cur->left);
+			}
+			//왼쪽 x 오른쪽 있으면 오른쪽 방문
+			else if (cur->right != NULL){
+				push(&stk,cur->right);
+			}
+			// 리프 노드이면 출력
+			else{
+				printf("%d ",cur->item);
+				pop(&stk);
+				lastvisited = cur; // 출력 했으면 방문 처리
+				up_chk = 1; // 리프에서 위로 가자
+				dwn_chk = 0;
+			}
+		}
+
+		else if(up_chk){
+			// 올라왔을때 오른쪽 노드 있고, 미방문이면 방문
+			if(cur->right != NULL && cur->right != lastvisited){
+				push(&stk,cur->right);
+				dwn_chk = 1;
+				up_chk = 0;
+			}
+			else{
+				printf("%d ", cur->item);
+				pop(&stk);
+				lastvisited = cur; //출력 후 방문처리
+			}
+		}
+
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
